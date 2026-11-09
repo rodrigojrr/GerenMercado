@@ -6,8 +6,8 @@ Slides em `reveal.js` (arquivo HTML único) demonstrando um caso de uso completo
 
 | Arquivo | O que é |
 |---|---|
-| `slides.html` | A apresentação (12 slides). Reveal.js via CDN — precisa de internet na primeira carga. |
-| `slides.pdf` | Export pronto, 12 páginas 13,33 × 7,5 in. |
+| `slides.html` | A apresentação (13 slides). Reveal.js via CDN — precisa de internet na primeira carga. |
+| `slides.pdf` | Export pronto, 13 páginas 13,33 × 7,5 in. |
 | `demo.txt` | Roteiro de entradas usado no caso de uso (Ana, Bruno, Carla). |
 | `saida-demo.txt` | Saída real do binário para esse roteiro (fonte dos blocos de terminal dos slides). |
 | `exportar-pdf.sh` | Regera o PDF depois de editar os slides. |

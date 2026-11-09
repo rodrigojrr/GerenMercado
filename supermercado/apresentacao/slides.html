@@ -184,6 +184,33 @@
   </aside>
 </section>
 
+<!-- BUILD -->
+<section>
+  <div class="eyebrow">Build</div>
+  <h2>Compilar e rodar</h2>
+  <div class="term">
+    <div class="bar"><i class="dot r"></i><i class="dot y"></i><i class="dot g"></i><span>terminal</span></div>
+<pre><span class="in">$</span> g++ -std=c++17 -Wall -Wextra -pedantic main.cpp -o mercado
+<span class="in">$</span> ./mercado</pre>
+  </div>
+  <table style="margin-top:14px">
+    <thead><tr><th>Flag</th><th>O que faz</th></tr></thead>
+    <tbody>
+      <tr><td><code>-std=c++17</code></td><td>escolhe a versão da linguagem; o código usa <code>to_string</code>, do C++11</td></tr>
+      <tr><td><code>-Wall</code></td><td>liga os avisos mais comuns do compilador</td></tr>
+      <tr><td><code>-Wextra</code></td><td>liga avisos adicionais, além do <code>-Wall</code></td></tr>
+      <tr><td><code>-pedantic</code></td><td>reclama de qualquer coisa fora do padrão C++</td></tr>
+      <tr><td><code>-o mercado</code></td><td>nome do arquivo executável gerado</td></tr>
+    </tbody>
+  </table>
+  <p class="caption">O projeto compila sem nenhum aviso com essas flags — é assim que o binário do repositório foi gerado.</p>
+  <aside class="notes">
+    Se perguntarem por que tanta flag: -Wall -Wextra -pedantic não mudam o programa,
+    só fazem o compilador avisar quando algo está suspeito. Compilar limpo é parte
+    da entrega.
+  </aside>
+</section>
+
 <!-- 5 -->
 <section>
   <div class="eyebrow">Caso de uso</div>

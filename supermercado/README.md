@@ -27,6 +27,19 @@ g++ -std=c++17 -Wall -Wextra -pedantic main.cpp -o mercado
 ./mercado 5      # define a quantidade de caixas (1 a 5)
 ```
 
+O que cada flag faz:
+
+| Flag | O que faz |
+|---|---|
+| `-std=c++17` | escolhe a versão da linguagem; o código usa recursos de C++11, como `to_string` |
+| `-Wall` | liga os avisos mais comuns do compilador |
+| `-Wextra` | liga avisos adicionais, além dos que o `-Wall` já mostra |
+| `-pedantic` | avisa sobre qualquer coisa fora do padrão C++ (extensões do GCC) |
+| `-o mercado` | define o nome do arquivo executável gerado |
+
+`-Wall -Wextra -pedantic` não mudam o programa: só fazem o compilador avisar quando
+algo está suspeito. O projeto compila com **zero avisos** nessas condições.
+
 ## Menu
 
 ```

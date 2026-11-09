@@ -6,7 +6,7 @@ set -euo pipefail
 cd "$(dirname "$0")"
 
 CHROME="${CHROME:-$(command -v chromium || command -v chromium-browser || command -v google-chrome)}"
-TOTAL=12
+TOTAL=13
 TMP="$(mktemp -d)"
 trap 'rm -rf "$TMP"' EXIT
 
