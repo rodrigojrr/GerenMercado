@@ -1,34 +1,55 @@
 # Sistema de Supermercado e Filas de Caixa
 
-Projeto em C++17 que controla produtos, compras, caixas e historico de operacoes.
-A lista de produtos, a fila de clientes e a pilha de operacoes foram implementadas
-manualmente, sem `std::list`, `std::queue` ou `std::stack`.
+Projeto de Estruturas de Dados em C++ para controlar produtos, compras, caixas e
+histórico de operações. Todo o código está em `main.cpp`, usando apenas os
+conceitos vistos em sala: **struct, vetor de tamanho fixo, ponteiro, fila, pilha,
+função recursiva e matriz**.
 
-## Compilacao
+## Conceitos e onde estão no código
+
+| Conceito | Função | O que faz |
+|---|---|---|
+| Ponteiro | `enfileirar`, `empilhar` | nós (`NoCliente`, `NoOperacao`) ligados por `proximo` |
+| Fila | `enfileirar` / `desenfileirar` | clientes de cada caixa, em ordem de chegada |
+| Pilha | `empilhar` / `listarHistorico` | histórico de operações, do mais recente para o mais antigo |
+| Recursão | `buscarProduto` | procura o produto percorrendo o vetor |
+| | `somarCarrinho` | soma o total de uma compra |
+| | `totalVendidoProduto` / `totalVendidoCaixa` | somam uma linha/coluna da matriz |
+| | `liberarFila` / `liberarPilha` | liberam a memória ao sair |
+| Matriz | `vendas[produto][caixa]` | quantidade vendida de cada produto em cada caixa |
+
+## Compilação
 
 ```bash
 make
-./mercado        # 3 caixas por padrao
-./mercado 5      # define a quantidade de caixas
+./mercado        # 3 caixas
+./mercado 5      # define a quantidade de caixas (1 a 5)
 ```
 
-## Testes
+## Menu
 
-```bash
-make test
 ```
-
-## Estruturas
-
-- `ListaProdutos`: lista simplesmente encadeada, ordenada por codigo.
-- `FilaClientes`: fila encadeada com ponteiros de inicio e fim, uma por caixa.
-- `PilhaOperacoes`: pilha encadeada com o historico (LIFO) das operacoes.
+1 Cadastrar produto          5 Listar filas dos caixas
+2 Consultar preco            6 Finalizar atendimento
+3 Listar produtos            7 Historico de operacoes (pilha)
+4 Registrar compra           8 Relatorio de vendas (matriz)
+0 Sair
+```
 
 ## Regras principais
 
-- Codigo de produto unico e positivo, preco maior que zero e estoque nao negativo.
-- A compra e validada no registro e revalidada na finalizacao.
-- O estoque e debitado somente ao finalizar o atendimento.
-- Se o estoque acabar enquanto o cliente espera, a finalizacao e bloqueada e ele
-  permanece na fila.
-- A atribuicao automatica escolhe o caixa com a menor fila.
+- Código de produto único e positivo, preço maior que zero, estoque não negativo.
+- A compra é validada no registro e **revalidada** na finalização.
+- O estoque só é debitado ao finalizar o atendimento.
+- Se o estoque acabar enquanto o cliente espera, a finalização é bloqueada e ele
+  continua na fila.
+- Caixa `0` no registro de compra escolhe automaticamente o caixa com a menor fila.
+
+## Limites (vetores de tamanho fixo)
+
+`MAX_PRODUTOS = 50`, `MAX_CAIXAS = 5`, `MAX_ITENS = 20` por compra.
+
+## Apresentação
+
+`apresentacao/slides.html` traz a demonstração do caso de uso com a saída real do
+programa; veja `apresentacao/README.md`.

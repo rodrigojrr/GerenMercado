@@ -1,21 +1,16 @@
 CXX ?= g++
-CXXFLAGS ?= -std=c++17 -Wall -Wextra -pedantic -Iinclude
-SRC := $(wildcard src/*.cpp)
+CXXFLAGS ?= -std=c++17 -Wall -Wextra -pedantic
 BIN := mercado
 
-.PHONY: all run test clean
+.PHONY: all run clean
 
 all: $(BIN)
 
-$(BIN): $(SRC) $(wildcard include/*.h)
-	$(CXX) $(CXXFLAGS) $(SRC) -o $(BIN)
+$(BIN): main.cpp
+	$(CXX) $(CXXFLAGS) main.cpp -o $(BIN)
 
 run: $(BIN)
 	./$(BIN)
-
-test: $(BIN)
-	$(CXX) $(CXXFLAGS) tests/testes.cpp $(filter-out src/main.cpp,$(SRC)) -o testes
-	./testes
 
 clean:
 	rm -f $(BIN) testes

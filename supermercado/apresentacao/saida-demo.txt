@@ -1,0 +1,252 @@
+Sistema de Supermercado e Filas de Caixa
+Caixas ativos: 3
+
+===== MENU =====
+1  Cadastrar produto
+2  Consultar preco por codigo
+3  Listar produtos
+4  Registrar compra
+5  Listar filas dos caixas
+6  Finalizar atendimento
+7  Historico de operacoes
+8  Relatorio de vendas (matriz)
+0  Sair
+Opcao: 
+Codigo: Nome: Preco: Estoque inicial: Produto Arroz 5kg cadastrado com sucesso.
+
+===== MENU =====
+1  Cadastrar produto
+2  Consultar preco por codigo
+3  Listar produtos
+4  Registrar compra
+5  Listar filas dos caixas
+6  Finalizar atendimento
+7  Historico de operacoes
+8  Relatorio de vendas (matriz)
+0  Sair
+Opcao: 
+Codigo: Nome: Preco: Estoque inicial: Erro: Ja existe um produto com o codigo 101.
+
+===== MENU =====
+1  Cadastrar produto
+2  Consultar preco por codigo
+3  Listar produtos
+4  Registrar compra
+5  Listar filas dos caixas
+6  Finalizar atendimento
+7  Historico de operacoes
+8  Relatorio de vendas (matriz)
+0  Sair
+Opcao: 
+Codigo: Nome: Preco: Estoque inicial: Produto Feijao 1kg cadastrado com sucesso.
+
+===== MENU =====
+1  Cadastrar produto
+2  Consultar preco por codigo
+3  Listar produtos
+4  Registrar compra
+5  Listar filas dos caixas
+6  Finalizar atendimento
+7  Historico de operacoes
+8  Relatorio de vendas (matriz)
+0  Sair
+Opcao: 
+Codigo: Nome: Preco: Estoque inicial: Produto Cafe 500g cadastrado com sucesso.
+
+===== MENU =====
+1  Cadastrar produto
+2  Consultar preco por codigo
+3  Listar produtos
+4  Registrar compra
+5  Listar filas dos caixas
+6  Finalizar atendimento
+7  Historico de operacoes
+8  Relatorio de vendas (matriz)
+0  Sair
+Opcao: 
+Codigo  Nome                             Preco   Estoque
+101     Arroz 5kg                     R$ 24.90        10
+102     Feijao 1kg                     R$ 8.50        20
+103     Cafe 500g                     R$ 18.00         3
+
+===== MENU =====
+1  Cadastrar produto
+2  Consultar preco por codigo
+3  Listar produtos
+4  Registrar compra
+5  Listar filas dos caixas
+6  Finalizar atendimento
+7  Historico de operacoes
+8  Relatorio de vendas (matriz)
+0  Sair
+Opcao: 
+Nome do cliente: Codigo do produto (0 para concluir): Quantidade: Adicionado: Arroz 5kg x2 = R$ 49.80
+Codigo do produto (0 para concluir): Quantidade: Adicionado: Cafe 500g x2 = R$ 36.00
+Codigo do produto (0 para concluir): Caixa (1..3, 0 para automatico): Cliente Ana (id 1) entrou na fila do caixa 1.
+
+===== MENU =====
+1  Cadastrar produto
+2  Consultar preco por codigo
+3  Listar produtos
+4  Registrar compra
+5  Listar filas dos caixas
+6  Finalizar atendimento
+7  Historico de operacoes
+8  Relatorio de vendas (matriz)
+0  Sair
+Opcao: 
+Nome do cliente: Codigo do produto (0 para concluir): Quantidade: Adicionado: Feijao 1kg x3 = R$ 25.50
+Codigo do produto (0 para concluir): Caixa (1..3, 0 para automatico): Cliente Bruno (id 2) entrou na fila do caixa 2.
+
+===== MENU =====
+1  Cadastrar produto
+2  Consultar preco por codigo
+3  Listar produtos
+4  Registrar compra
+5  Listar filas dos caixas
+6  Finalizar atendimento
+7  Historico de operacoes
+8  Relatorio de vendas (matriz)
+0  Sair
+Opcao: 
+Nome do cliente: Codigo do produto (0 para concluir): Quantidade: Adicionado: Cafe 500g x2 = R$ 36.00
+Codigo do produto (0 para concluir): Caixa (1..3, 0 para automatico): Cliente Carla (id 3) entrou na fila do caixa 3.
+
+===== MENU =====
+1  Cadastrar produto
+2  Consultar preco por codigo
+3  Listar produtos
+4  Registrar compra
+5  Listar filas dos caixas
+6  Finalizar atendimento
+7  Historico de operacoes
+8  Relatorio de vendas (matriz)
+0  Sair
+Opcao: 
+Caixa 1 (1 cliente(s)):
+  #1 Ana - 2 item(ns) - total R$ 85.80
+Caixa 2 (1 cliente(s)):
+  #2 Bruno - 1 item(ns) - total R$ 25.50
+Caixa 3 (1 cliente(s)):
+  #3 Carla - 1 item(ns) - total R$ 36.00
+
+===== MENU =====
+1  Cadastrar produto
+2  Consultar preco por codigo
+3  Listar produtos
+4  Registrar compra
+5  Listar filas dos caixas
+6  Finalizar atendimento
+7  Historico de operacoes
+8  Relatorio de vendas (matriz)
+0  Sair
+Opcao: 
+Numero do caixa: === Comprovante ===
+Cliente: Ana (id 1)
+  - Arroz 5kg x2 x R$ 24.90 = R$ 49.80
+  - Cafe 500g x2 x R$ 18.00 = R$ 36.00
+Total..: R$ 85.80
+Atendimento do cliente Ana finalizado no caixa 1.
+
+===== MENU =====
+1  Cadastrar produto
+2  Consultar preco por codigo
+3  Listar produtos
+4  Registrar compra
+5  Listar filas dos caixas
+6  Finalizar atendimento
+7  Historico de operacoes
+8  Relatorio de vendas (matriz)
+0  Sair
+Opcao: 
+Numero do caixa: Erro: Atendimento bloqueado: Estoque insuficiente para 'Cafe 500g': disponivel 1, solicitado 2.
+
+===== MENU =====
+1  Cadastrar produto
+2  Consultar preco por codigo
+3  Listar produtos
+4  Registrar compra
+5  Listar filas dos caixas
+6  Finalizar atendimento
+7  Historico de operacoes
+8  Relatorio de vendas (matriz)
+0  Sair
+Opcao: 
+Caixa 1 (0 cliente(s)):
+  (fila vazia)
+Caixa 2 (1 cliente(s)):
+  #2 Bruno - 1 item(ns) - total R$ 25.50
+Caixa 3 (1 cliente(s)):
+  #3 Carla - 1 item(ns) - total R$ 36.00
+
+===== MENU =====
+1  Cadastrar produto
+2  Consultar preco por codigo
+3  Listar produtos
+4  Registrar compra
+5  Listar filas dos caixas
+6  Finalizar atendimento
+7  Historico de operacoes
+8  Relatorio de vendas (matriz)
+0  Sair
+Opcao: 
+Numero do caixa: === Comprovante ===
+Cliente: Bruno (id 2)
+  - Feijao 1kg x3 x R$ 8.50 = R$ 25.50
+Total..: R$ 25.50
+Atendimento do cliente Bruno finalizado no caixa 2.
+
+===== MENU =====
+1  Cadastrar produto
+2  Consultar preco por codigo
+3  Listar produtos
+4  Registrar compra
+5  Listar filas dos caixas
+6  Finalizar atendimento
+7  Historico de operacoes
+8  Relatorio de vendas (matriz)
+0  Sair
+Opcao: 
+Historico (mais recente primeiro):
+  1. [20:21:05] Cliente Bruno (id 2) atendido no caixa 2 (R$ 25.50)
+  2. [20:21:05] Cliente Ana (id 1) atendido no caixa 1 (R$ 85.80)
+  3. [20:21:05] Cliente Carla (id 3) entrou na fila do caixa 3 (R$ 36.00)
+  4. [20:21:05] Cliente Bruno (id 2) entrou na fila do caixa 2 (R$ 25.50)
+  5. [20:21:05] Cliente Ana (id 1) entrou na fila do caixa 1 (R$ 85.80)
+  6. [20:21:05] Produto 103 - Cafe 500g cadastrado com estoque 3
+  7. [20:21:05] Produto 102 - Feijao 1kg cadastrado com estoque 20
+  8. [20:21:05] Produto 101 - Arroz 5kg cadastrado com estoque 10
+
+===== MENU =====
+1  Cadastrar produto
+2  Consultar preco por codigo
+3  Listar produtos
+4  Registrar compra
+5  Listar filas dos caixas
+6  Finalizar atendimento
+7  Historico de operacoes
+8  Relatorio de vendas (matriz)
+0  Sair
+Opcao: 
+Codigo  Produto                     Cx 1    Cx 2    Cx 3     Total
+101     Arroz 5kg                      2       0       0         2
+102     Feijao 1kg                     0       3       0         3
+103     Cafe 500g                      2       0       0         2
+Total por caixa                        4       3       0         7
+
+Itens vendidos.....: 7
+Atendimentos.......: 2
+Faturamento total..: R$ 111.30
+
+===== MENU =====
+1  Cadastrar produto
+2  Consultar preco por codigo
+3  Listar produtos
+4  Registrar compra
+5  Listar filas dos caixas
+6  Finalizar atendimento
+7  Historico de operacoes
+8  Relatorio de vendas (matriz)
+0  Sair
+Opcao: 
+Encerrando o sistema. Ate logo!

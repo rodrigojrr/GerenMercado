@@ -1,0 +1,395 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Sistema de Supermercado e Filas de Caixa</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/dist/reveal.css">
+<style>
+  :root {
+    --bg: #0b1020;
+    --panel: #131c36;
+    --ink: #e8eefc;
+    --muted: #93a3c4;
+    --accent: #4ade80;
+    --accent-2: #60a5fa;
+    --warn: #fbbf24;
+    --danger: #f87171;
+    --line: #24314f;
+    --mono: "JetBrains Mono", "Fira Code", ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  }
+
+  html, body, .reveal-viewport { background: var(--bg); }
+
+  .reveal {
+    --r-background-color: var(--bg);
+    --r-main-color: var(--ink);
+    --r-heading-color: #fff;
+    font-family: ui-sans-serif, system-ui, "Segoe UI", Roboto, sans-serif;
+    font-size: 28px;
+    color: var(--ink);
+  }
+  .reveal .slides { text-align: left; }
+  .reveal section { padding: 0 18px; }
+  .reveal h1 { font-size: 2.1em; line-height: 1.1; margin: 0 0 .35em; font-weight: 700; color: #fff; }
+  .reveal h2 { font-size: 1.42em; margin: 0 0 .5em; font-weight: 700; color: #fff; letter-spacing: -0.02em; }
+  .reveal h3 { font-size: .95em; font-weight: 600; color: var(--accent-2); margin: 0 0 .45em; }
+  .reveal p, .reveal li { font-size: .78em; line-height: 1.45; }
+  .reveal li { margin-bottom: .4em; }
+  .reveal ul { margin-left: 1em; }
+  .reveal strong { color: #fff; }
+  .reveal em { color: var(--warn); font-style: normal; }
+  .reveal code { font-family: var(--mono); font-size: .88em; background: rgba(96,165,250,.14); color: #bcd7ff; padding: .1em .35em; border-radius: 5px; }
+  .reveal .muted { color: var(--muted); }
+  .reveal .progress { color: var(--accent); height: 3px; }
+  .reveal .slide-number { background: transparent; color: var(--muted); font-family: var(--mono); }
+
+  .eyebrow {
+    font-family: var(--mono); font-size: .46em; letter-spacing: .22em;
+    text-transform: uppercase; color: var(--accent); margin-bottom: .9em;
+  }
+
+  .card { background: var(--panel); border: 1px solid var(--line); border-radius: 14px; padding: 16px 20px; }
+  .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; align-items: start; }
+  .grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; align-items: stretch; }
+
+  .pill {
+    display: inline-block; font-family: var(--mono); font-size: .46em;
+    padding: .25em .7em; border-radius: 999px; border: 1px solid var(--line);
+    color: var(--muted); background: rgba(255,255,255,.03); margin: 0 .35em .35em 0;
+  }
+
+  .term {
+    background: #060a16; border: 1px solid var(--line); border-radius: 12px;
+    overflow: hidden; box-shadow: 0 18px 40px rgba(0,0,0,.45);
+  }
+  .term .bar { display: flex; align-items: center; gap: 7px; padding: 8px 12px; background: #0d1426; border-bottom: 1px solid var(--line); }
+  .term .dot { width: 9px; height: 9px; border-radius: 50%; }
+  .term .dot.r { background: #ff5f57; } .term .dot.y { background: #febc2e; } .term .dot.g { background: #28c840; }
+  .term .bar span { margin-left: 8px; color: #5f7299; font-size: .8em; font-family: var(--mono); }
+  .term pre {
+    margin: 0; padding: 12px 14px; white-space: pre-wrap;
+    font-family: var(--mono); font-size: .54em; line-height: 1.42; color: #cfe0ff;
+  }
+  .term .in { color: var(--accent); }
+  .term .err { color: var(--danger); }
+  .term .sys { color: #7b8cb3; }
+  .term .ok { color: var(--accent); }
+
+  .reveal table { width: 100%; border-collapse: collapse; font-size: .6em; }
+  .reveal th, .reveal td { padding: .5em .6em; border-bottom: 1px solid var(--line); text-align: left; }
+  .reveal th { color: var(--muted); font-weight: 600; font-size: .9em; text-transform: uppercase; letter-spacing: .06em; }
+  .reveal tr:last-child td { border-bottom: none; }
+  .reveal .num { font-family: var(--mono); color: var(--accent); white-space: nowrap; }
+
+  .big-num { font-family: var(--mono); font-size: 1.6em; color: var(--accent); line-height: 1.1; }
+  .caption { font-size: .5em; color: var(--muted); font-family: var(--mono); margin-top: .7em; }
+</style>
+</head>
+<body>
+<div class="reveal">
+<div class="slides">
+
+<!-- 1 -->
+<section>
+  <div class="eyebrow">Estruturas de Dados · C++</div>
+  <h1>Sistema de Supermercado<br>e Filas de Caixa</h1>
+  <p class="muted">Demonstração de um caso de uso completo</p>
+  <div style="margin-top:1.1em">
+    <span class="pill">struct</span>
+    <span class="pill">ponteiro</span>
+    <span class="pill">fila</span>
+    <span class="pill">pilha</span>
+    <span class="pill">função recursiva</span>
+    <span class="pill">matriz</span>
+  </div>
+  <aside class="notes">
+    Projeto de Estruturas de Dados em C++. Um arquivo só, sem classes nem STL:
+    structs, vetores de tamanho fixo, ponteiros, fila, pilha, recursão e matriz.
+  </aside>
+</section>
+
+<!-- 2 -->
+<section>
+  <div class="eyebrow">O sistema</div>
+  <h2>Uma frase e um menu</h2>
+  <p style="font-size:.95em; margin-bottom:1em">Controlar produtos, a fila de cada caixa e o histórico do que aconteceu.</p>
+  <div class="grid-2">
+    <div class="card">
+      <h3>O que ele faz</h3>
+      <ul>
+        <li>Cadastra produtos com <strong>código único</strong>, preço e estoque</li>
+        <li>Registra compras e distribui os clientes entre os caixas</li>
+        <li>Finaliza o atendimento e debita o estoque</li>
+        <li>Guarda o histórico e mostra as vendas por caixa</li>
+      </ul>
+    </div>
+    <div class="card">
+      <h3>O que ele não faz</h3>
+      <ul>
+        <li>Nada de classes, herança ou <code>std::vector</code></li>
+        <li>Nada de arquivo ou banco de dados: tudo em memória</li>
+        <li>Limites fixos: 50 produtos, 5 caixas, 20 itens por compra</li>
+      </ul>
+    </div>
+  </div>
+  <aside class="notes">
+    Deixe claro o escopo. A ausência de classes é proposital: o projeto usa só o que
+    foi visto em sala.
+  </aside>
+</section>
+
+<!-- 3 -->
+<section>
+  <div class="eyebrow">Como está montado</div>
+  <h2>Tudo parte de uma <code>struct Mercado</code></h2>
+  <div class="term">
+    <div class="bar"><i class="dot r"></i><i class="dot y"></i><i class="dot g"></i><span>main.cpp</span></div>
+<pre><span class="sys">struct Mercado {</span>
+    Produto       produtos[MAX_PRODUTOS];   <span class="sys">// cadastro</span>
+    FilaClientes  caixas[MAX_CAIXAS];       <span class="sys">// 1 fila por caixa (ponteiros)</span>
+    PilhaOperacoes historico;               <span class="sys">// histórico (ponteiros)</span>
+    int           vendas[MAX_PRODUTOS][MAX_CAIXAS];  <span class="sys">// matriz</span>
+<span class="sys">};</span>
+
+<span class="sys">FilaClientes:</span>  inicio -> [#1] -> [#2] -> [#3] -> NULL   <span class="sys">(fim)</span>
+<span class="sys">Pilha:</span>         topo  -> [última operação] -> ... -> NULL</pre>
+  </div>
+  <p class="caption">Cada parte do trabalho tem seu espaço próprio: vetor para o cadastro, ponteiros para fila e pilha, matriz para o relatório.</p>
+  <aside class="notes">
+    Esse é o slide que resume o projeto. Se o professor perguntar "onde está a fila?",
+    aponte caixas[]; "onde está a pilha?", historico; "onde está a matriz?", vendas.
+  </aside>
+</section>
+
+<!-- 4 -->
+<section>
+  <div class="eyebrow">Os cinco conceitos</div>
+  <h2>Onde cada um aparece no código</h2>
+  <table>
+    <thead><tr><th>Conceito</th><th>Função</th><th>Para que serve</th></tr></thead>
+    <tbody>
+      <tr><td><strong>Ponteiro</strong></td><td><code>enfileirar</code>, <code>empilhar</code></td><td>nós ligados por <code>proximo</code></td></tr>
+      <tr><td><strong>Fila</strong></td><td><code>enfileirar</code> / <code>desenfileirar</code></td><td>clientes de cada caixa, em ordem de chegada</td></tr>
+      <tr><td><strong>Pilha</strong></td><td><code>empilhar</code> / <code>listarHistorico</code></td><td>histórico, do mais recente para o mais antigo</td></tr>
+      <tr><td><strong>Recursão</strong></td><td><code>buscarProduto</code>, <code>somarCarrinho</code></td><td>buscar produto e somar a compra</td></tr>
+      <tr><td></td><td><code>totalVendidoProduto</code>, <code>liberarFila</code></td><td>somar linha da matriz e liberar memória</td></tr>
+      <tr><td><strong>Matriz</strong></td><td><code>vendas[produto][caixa]</code></td><td>quantidade vendida por produto em cada caixa</td></tr>
+    </tbody>
+  </table>
+  <p class="caption">A recursão também aparece em <code>somarCarrinho</code> (total da compra) e na liberação da pilha ao sair do programa.</p>
+  <aside class="notes">
+    Slide de defesa: cada conceito tem uma função apontável. A recursão não é
+    decorativa — é como a busca e as somas funcionam.
+  </aside>
+</section>
+
+<!-- 5 -->
+<section>
+  <div class="eyebrow">Caso de uso</div>
+  <h2>Um dia no supermercado</h2>
+  <div class="grid-3" style="margin-bottom:14px">
+    <div class="card"><h3>Catálogo</h3><p style="font-size:.62em">101 Arroz 5kg · R$ 24,90 · 10 un<br>102 Feijão 1kg · R$ 8,50 · 20 un<br>103 Café 500g · R$ 18,00 · <strong style="color:var(--warn)">3 un</strong></p></div>
+    <div class="card"><h3>Clientes</h3><p style="font-size:.62em"><strong style="color:var(--accent)">Ana</strong> — 2× arroz, 2× café<br><strong style="color:var(--accent)">Bruno</strong> — 3× feijão<br><strong style="color:var(--accent)">Carla</strong> — 2× café</p></div>
+    <div class="card"><h3>Cenário</h3><p style="font-size:.62em">3 caixas ativos.<br>Chegada em sequência, caixa escolhido <strong>automaticamente</strong>.</p></div>
+  </div>
+  <p style="font-size:.7em">O roteiro percorre o sistema inteiro: cadastro e erro de duplicidade → compras com
+  auto-atribuição de caixa → filas → finalização com comprovante → <em>bloqueio por
+  estoque</em> → histórico e relatório.</p>
+  <aside class="notes">
+    Todas as telas a seguir são saída real do programa, capturadas do roteiro em
+    apresentacao/demo.txt.
+  </aside>
+</section>
+
+<!-- 6 -->
+<section>
+  <div class="eyebrow">Demo · 1 de 5</div>
+  <h2>Cadastro e listagem</h2>
+  <div class="term">
+    <div class="bar"><i class="dot r"></i><i class="dot y"></i><i class="dot g"></i><span>./mercado</span></div>
+<pre><span class="in">&gt; 1</span>
+Codigo: <span class="in">101</span>   Nome: <span class="in">Arroz 5kg</span>   Preco: <span class="in">24.90</span>   Estoque: <span class="in">10</span>
+<span class="ok">Produto Arroz 5kg cadastrado com sucesso.</span>
+
+<span class="in">&gt; 1</span>
+Codigo: <span class="in">101</span>   Nome: <span class="in">Arroz Duplicado</span>   Preco: <span class="in">30.00</span>   Estoque: <span class="in">5</span>
+<span class="err">Erro: Ja existe um produto com o codigo 101.</span>
+
+<span class="in">&gt; 3</span>
+<span class="sys">Codigo  Nome                             Preco   Estoque
+101     Arroz 5kg                     R$ 24.90        10
+102     Feijao 1kg                     R$ 8.50        20
+103     Cafe 500g                     R$ 18.00         3</span></pre>
+  </div>
+  <p class="caption">A busca do código repetido é a função recursiva <code>buscarProduto</code>.</p>
+  <aside class="notes">
+    Mostre o erro de código duplicado: a validação acontece antes de qualquer coisa
+    ser gravada.
+  </aside>
+</section>
+
+<!-- 7 -->
+<section>
+  <div class="eyebrow">Demo · 2 de 5</div>
+  <h2>Compras entram na fila do caixa</h2>
+  <div class="term">
+    <div class="bar"><i class="dot r"></i><i class="dot y"></i><i class="dot g"></i><span>./mercado</span></div>
+<pre><span class="in">&gt; 4</span>
+Nome do cliente: <span class="in">Ana</span>
+Codigo do produto: <span class="in">101</span>  Quantidade: <span class="in">2</span>   <span class="sys">Adicionado: Arroz 5kg x2 = R$ 49.80</span>
+Codigo do produto: <span class="in">103</span>  Quantidade: <span class="in">2</span>   <span class="sys">Adicionado: Cafe 500g x2 = R$ 36.00</span>
+Codigo do produto: <span class="in">0</span>
+Caixa (1..3, 0 para automatico): <span class="in">0</span>
+<span class="ok">Cliente Ana (id 1) entrou na fila do caixa 1.</span>
+
+<span class="in">&gt; 5</span>
+<span class="sys">Caixa 1 (1 cliente(s)):
+  #1 Ana - 2 item(ns) - total R$ 85.80
+Caixa 2 (1 cliente(s)):
+  #2 Bruno - 1 item(ns) - total R$ 25.50
+Caixa 3 (1 cliente(s)):
+  #3 Carla - 1 item(ns) - total R$ 36.00</span></pre>
+  </div>
+  <p class="caption">Bruno e Carla também pediram caixa automático: cada um foi para a fila menor.</p>
+  <aside class="notes">
+    Detalhe importante: o preço usado no carrinho é sempre o do cadastro, e o total
+    é somado pela função recursiva somarCarrinho.
+  </aside>
+</section>
+
+<!-- 8 -->
+<section>
+  <div class="eyebrow">Demo · 3 de 5</div>
+  <h2>Finalizar atendimento</h2>
+  <div class="term">
+    <div class="bar"><i class="dot r"></i><i class="dot y"></i><i class="dot g"></i><span>./mercado</span></div>
+<pre><span class="in">&gt; 6</span>
+Numero do caixa: <span class="in">1</span>
+<span class="sys">=== Comprovante ===
+Cliente: Ana (id 1)
+  - Arroz 5kg x2 x R$ 24.90 = R$ 49.80
+  - Cafe 500g x2 x R$ 18.00 = R$ 36.00
+Total..: R$ 85.80</span>
+<span class="ok">Atendimento do cliente Ana finalizado no caixa 1.</span></pre>
+  </div>
+  <div class="grid-3" style="margin-top:14px">
+    <div class="card"><h3>desenfileirar</h3><p style="font-size:.6em">Ana sai da fila do caixa 1</p></div>
+    <div class="card"><h3>estoque</h3><p style="font-size:.6em">Arroz 10 → 8 · Café 3 → <strong style="color:var(--warn)">1</strong></p></div>
+    <div class="card"><h3>matriz e pilha</h3><p style="font-size:.6em"><code>vendas[0][0] += 2</code><br>operação empilhada</p></div>
+  </div>
+  <aside class="notes">
+    O estoque só é debitado aqui, na finalização — nunca no registro da compra.
+  </aside>
+</section>
+
+<!-- 9 -->
+<section>
+  <div class="eyebrow">Demo · 4 de 5 · o momento-chave</div>
+  <h2>O estoque acabou enquanto Carla esperava</h2>
+  <div class="term">
+    <div class="bar"><i class="dot r"></i><i class="dot y"></i><i class="dot g"></i><span>./mercado</span></div>
+<pre><span class="in">&gt; 6</span>
+Numero do caixa: <span class="in">3</span>
+<span class="err">Erro: Atendimento bloqueado: Estoque insuficiente para 'Cafe 500g': disponivel 1, solicitado 2.</span>
+
+<span class="in">&gt; 5</span>
+<span class="sys">Caixa 1 (0 cliente(s)):
+  (fila vazia)
+Caixa 2 (1 cliente(s)):
+  #2 Bruno - 1 item(ns) - total R$ 25.50
+Caixa 3 (1 cliente(s)):
+  #3 Carla - 1 item(ns) - total R$ 36.00</span></pre>
+  </div>
+  <div class="card" style="margin-top:14px; border-color:rgba(251,191,36,.45)">
+    <p style="margin:0"><strong>Carla continua na fila.</strong> A compra dela foi aceita no registro,
+    mas o estoque é revalidado no atendimento. Sem isso, o sistema venderia café que não existe.</p>
+  </div>
+  <aside class="notes">
+    Esse é o ponto que mostra por que a regra "debita só ao finalizar" existe.
+  </aside>
+</section>
+
+<!-- 10 -->
+<section>
+  <div class="eyebrow">Demo · 5 de 5 · pilha</div>
+  <h2>Histórico: a pilha de operações</h2>
+  <div class="term">
+    <div class="bar"><i class="dot r"></i><i class="dot y"></i><i class="dot g"></i><span>./mercado</span></div>
+<pre><span class="in">&gt; 7</span>
+<span class="sys">Historico (mais recente primeiro):
+  1. [20:21:05] Cliente Bruno (id 2) atendido no caixa 2 (R$ 25.50)
+  2. [20:21:05] Cliente Ana (id 1) atendido no caixa 1 (R$ 85.80)
+  3. [20:21:05] Cliente Carla (id 3) entrou na fila do caixa 3 (R$ 36.00)
+  4. [20:21:05] Cliente Bruno (id 2) entrou na fila do caixa 2 (R$ 25.50)
+  5. [20:21:05] Cliente Ana (id 1) entrou na fila do caixa 1 (R$ 85.80)
+  6. [20:21:05] Produto 103 - Cafe 500g cadastrado com estoque 3
+  7. [20:21:05] Produto 102 - Feijao 1kg cadastrado com estoque 20
+  8. [20:21:05] Produto 101 - Arroz 5kg cadastrado com estoque 10</span></pre>
+  </div>
+  <p class="caption">Pilha: cada operação é empilhada no topo, então a listagem começa pela última que aconteceu.</p>
+  <aside class="notes">
+    Ligue a estrutura ao comportamento: se fosse fila, a ordem seria a inversa.
+  </aside>
+</section>
+
+<!-- 11 -->
+<section>
+  <div class="eyebrow">Demo final · matriz</div>
+  <h2>Relatório de vendas: produto × caixa</h2>
+  <div class="term">
+    <div class="bar"><i class="dot r"></i><i class="dot y"></i><i class="dot g"></i><span>./mercado</span></div>
+<pre><span class="in">&gt; 8</span>
+<span class="sys">Codigo  Produto                     Cx 1    Cx 2    Cx 3     Total
+101     Arroz 5kg                      2       0       0         2
+102     Feijao 1kg                     0       3       0         3
+103     Cafe 500g                      2       0       0         2
+Total por caixa                        4       3       0         7
+
+Itens vendidos.....: 7
+Atendimentos.......: 2
+Faturamento total..: R$ 111.30</span></pre>
+  </div>
+  <p class="caption">Cada venda soma em <code>vendas[produto][caixa]</code>. A linha e a coluna de totais são somadas por funções recursivas.</p>
+  <aside class="notes">
+    Carla segue na fila do caixa 3, por isso a coluna Cx 3 está zerada.
+  </aside>
+</section>
+
+<!-- 12 -->
+<section>
+  <div class="eyebrow">Conclusão</div>
+  <h1 style="font-size:1.5em">Poucas estruturas,<br>cada uma no seu papel</h1>
+  <div class="grid-3" style="margin-top:16px">
+    <div class="card"><div class="big-num">1</div><p class="muted" style="font-size:.58em">arquivo, só com o que foi visto em sala</p></div>
+    <div class="card"><div class="big-num">5</div><p class="muted" style="font-size:.58em">conceitos: ponteiro, fila, pilha, recursão e matriz</p></div>
+    <div class="card"><div class="big-num">7</div><p class="muted" style="font-size:.58em">itens vendidos sem furar o estoque</p></div>
+  </div>
+  <h3 style="margin-top:20px">Limitações conhecidas</h3>
+  <p style="font-size:.7em">Sem persistência · limites fixos de vetor · sem prioridade de atendimento (idosos, gestantes) · sem reposição de estoque durante a execução.</p>
+  <p class="caption" style="margin-top:18px">Obrigado — perguntas?</p>
+  <aside class="notes">
+    Termine pela narrativa: 3 clientes, 2 atendidos, 1 bloqueado por estoque — e o
+    histórico tem os 8 eventos. Se sobrar tempo, mostre make e ./mercado ao vivo.
+  </aside>
+</section>
+
+</div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/dist/reveal.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/plugin/notes/notes.js"></script>
+<script>
+  Reveal.initialize({
+    hash: true,
+    slideNumber: 'c/t',
+    progress: true,
+    transition: 'slide',
+    width: 1280,
+    height: 720,
+    margin: 0.04,
+    plugins: [RevealNotes]
+  });
+</script>
+</body>
+</html>
