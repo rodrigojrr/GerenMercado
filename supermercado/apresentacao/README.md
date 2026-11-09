@@ -28,7 +28,7 @@ Navegação: `→` avança, `←` volta, `S` abre as notas do apresentador, `F` 
 ## Reproduzir a demo ao vivo
 
 ```bash
-make
+g++ -std=c++17 -Wall -Wextra -pedantic main.cpp -o mercado
 ./mercado < apresentacao/demo.txt
 ```
 

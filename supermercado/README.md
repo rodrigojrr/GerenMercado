@@ -21,7 +21,8 @@ função recursiva e matriz**.
 ## Compilação
 
 ```bash
-make
+g++ -std=c++17 -Wall -Wextra -pedantic main.cpp -o mercado
+
 ./mercado        # 3 caixas
 ./mercado 5      # define a quantidade de caixas (1 a 5)
 ```
