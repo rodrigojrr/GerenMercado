@@ -104,15 +104,16 @@
     <span class="pill">matriz</span>
   </div>
   <aside class="notes">
-    Projeto de Estruturas de Dados em C++. Um arquivo só, sem classes nem STL:
-    structs, vetores de tamanho fixo, ponteiros, fila, pilha, recursão e matriz.
+    Sistema de supermercado em C++ para a disciplina de Estruturas de Dados.
+    O programa controla o cadastro de produtos, as filas dos caixas e o
+    histórico de operações.
   </aside>
 </section>
 
 <!-- 2 -->
 <section>
   <div class="eyebrow">O sistema</div>
-  <h2>Uma frase e um menu</h2>
+  <h2>O que o sistema faz</h2>
   <p style="font-size:.95em; margin-bottom:1em">Controlar produtos, a fila de cada caixa e o histórico do que aconteceu.</p>
   <div class="grid-2">
     <div class="card">
@@ -125,17 +126,17 @@
       </ul>
     </div>
     <div class="card">
-      <h3>O que ele não faz</h3>
+      <h3>Escopo</h3>
       <ul>
-        <li>Nada de classes, herança ou <code>std::vector</code></li>
-        <li>Nada de arquivo ou banco de dados: tudo em memória</li>
-        <li>Limites fixos: 50 produtos, 5 caixas, 20 itens por compra</li>
+        <li>Tudo em memória: ao encerrar o programa, nada é salvo</li>
+        <li>Limites fixos: 50 produtos, 5 caixas e 20 itens por compra</li>
+        <li>Um cliente por vez em cada caixa, na ordem de chegada</li>
       </ul>
     </div>
   </div>
   <aside class="notes">
-    Deixe claro o escopo. A ausência de classes é proposital: o projeto usa só o que
-    foi visto em sala.
+    Todo o estado fica em memória: produtos, filas, histórico e a matriz de vendas.
+    Os limites são fixos porque os vetores têm tamanho definido em tempo de compilação.
   </aside>
 </section>
 
@@ -157,8 +158,9 @@
   </div>
   <p class="caption">Cada parte do trabalho tem seu espaço próprio: vetor para o cadastro, ponteiros para fila e pilha, matriz para o relatório.</p>
   <aside class="notes">
-    Esse é o slide que resume o projeto. Se o professor perguntar "onde está a fila?",
-    aponte caixas[]; "onde está a pilha?", historico; "onde está a matriz?", vendas.
+    A struct Mercado reúne as quatro partes: o vetor de produtos, as filas dos
+    caixas, a pilha de operações e a matriz de vendas. As setas mostram como os nós
+    se ligam por ponteiro.
   </aside>
 </section>
 
@@ -179,14 +181,14 @@
   </table>
   <p class="caption">A recursão também aparece em <code>somarCarrinho</code> (total da compra) e na liberação da pilha ao sair do programa.</p>
   <aside class="notes">
-    Slide de defesa: cada conceito tem uma função apontável. A recursão não é
-    decorativa — é como a busca e as somas funcionam.
+    Cada conceito aparece em uma função concreta. A recursão é usada na busca do
+    produto e nas somas: não é uma demonstração isolada.
   </aside>
 </section>
 
 <!-- BUILD -->
 <section>
-  <div class="eyebrow">Build</div>
+  <div class="eyebrow">Compilação</div>
   <h2>Compilar e rodar</h2>
   <div class="term">
     <div class="bar"><i class="dot r"></i><i class="dot y"></i><i class="dot g"></i><span>terminal</span></div>
@@ -203,11 +205,10 @@
       <tr><td><code>-o mercado</code></td><td>nome do arquivo executável gerado</td></tr>
     </tbody>
   </table>
-  <p class="caption">O projeto compila sem nenhum aviso com essas flags — é assim que o binário do repositório foi gerado.</p>
+  <p class="caption">Com essas flags o projeto compila sem nenhum aviso do compilador.</p>
   <aside class="notes">
-    Se perguntarem por que tanta flag: -Wall -Wextra -pedantic não mudam o programa,
-    só fazem o compilador avisar quando algo está suspeito. Compilar limpo é parte
-    da entrega.
+    As três flags de aviso não mudam o programa: só fazem o compilador apontar
+    código suspeito. Com elas o projeto compila limpo.
   </aside>
 </section>
 
@@ -224,8 +225,7 @@
   auto-atribuição de caixa → filas → finalização com comprovante → <em>bloqueio por
   estoque</em> → histórico e relatório.</p>
   <aside class="notes">
-    Todas as telas a seguir são saída real do programa, capturadas do roteiro em
-    apresentacao/demo.txt.
+    As telas a seguir vêm da execução do programa com este roteiro.
   </aside>
 </section>
 
@@ -251,8 +251,8 @@ Codigo: <span class="in">101</span>   Nome: <span class="in">Arroz Duplicado</sp
   </div>
   <p class="caption">A busca do código repetido é a função recursiva <code>buscarProduto</code>.</p>
   <aside class="notes">
-    Mostre o erro de código duplicado: a validação acontece antes de qualquer coisa
-    ser gravada.
+    O erro de código duplicado mostra a validação acontecendo antes de qualquer
+    coisa ser gravada.
   </aside>
 </section>
 
@@ -312,7 +312,7 @@ Total..: R$ 85.80</span>
 
 <!-- 9 -->
 <section>
-  <div class="eyebrow">Demo · 4 de 5 · o momento-chave</div>
+  <div class="eyebrow">Demo · 4 de 5</div>
   <h2>O estoque acabou enquanto Carla esperava</h2>
   <div class="term">
     <div class="bar"><i class="dot r"></i><i class="dot y"></i><i class="dot g"></i><span>./mercado</span></div>
@@ -356,7 +356,7 @@ Caixa 3 (1 cliente(s)):
   </div>
   <p class="caption">Pilha: cada operação é empilhada no topo, então a listagem começa pela última que aconteceu.</p>
   <aside class="notes">
-    Ligue a estrutura ao comportamento: se fosse fila, a ordem seria a inversa.
+    Se a estrutura fosse uma fila, a ordem da listagem seria a inversa.
   </aside>
 </section>
 
@@ -388,16 +388,16 @@ Faturamento total..: R$ 111.30</span></pre>
   <div class="eyebrow">Conclusão</div>
   <h1 style="font-size:1.5em">Poucas estruturas,<br>cada uma no seu papel</h1>
   <div class="grid-3" style="margin-top:16px">
-    <div class="card"><div class="big-num">1</div><p class="muted" style="font-size:.58em">arquivo, só com o que foi visto em sala</p></div>
+    <div class="card"><div class="big-num">0</div><p class="muted" style="font-size:.58em">vendas com estoque negativo</p></div>
     <div class="card"><div class="big-num">5</div><p class="muted" style="font-size:.58em">conceitos: ponteiro, fila, pilha, recursão e matriz</p></div>
-    <div class="card"><div class="big-num">7</div><p class="muted" style="font-size:.58em">itens vendidos sem furar o estoque</p></div>
+    <div class="card"><div class="big-num">7</div><p class="muted" style="font-size:.58em">itens vendidos no caso de uso</p></div>
   </div>
-  <h3 style="margin-top:20px">Limitações conhecidas</h3>
-  <p style="font-size:.7em">Sem persistência · limites fixos de vetor · sem prioridade de atendimento (idosos, gestantes) · sem reposição de estoque durante a execução.</p>
+  <h3 style="margin-top:20px">Próximos passos</h3>
+  <p style="font-size:.7em">Salvar os dados em arquivo · repor estoque sem reiniciar o programa · atendimento prioritário para idosos e gestantes · relatório de vendas por período.</p>
   <p class="caption" style="margin-top:18px">Obrigado — perguntas?</p>
   <aside class="notes">
-    Termine pela narrativa: 3 clientes, 2 atendidos, 1 bloqueado por estoque — e o
-    histórico tem os 8 eventos. Se sobrar tempo, compile com g++ e rode ./mercado ao vivo.
+    Fechamento: 3 clientes, 2 atendidos e 1 bloqueado por estoque; o histórico
+    registrou os 8 eventos e o estoque nunca ficou negativo.
   </aside>
 </section>
 

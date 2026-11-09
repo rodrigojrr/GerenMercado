@@ -1,9 +1,8 @@
 # Sistema de Supermercado e Filas de Caixa
 
 Projeto de Estruturas de Dados em C++ para controlar produtos, compras, caixas e
-histórico de operações. Todo o código está em `main.cpp`, usando apenas os
-conceitos vistos em sala: **struct, vetor de tamanho fixo, ponteiro, fila, pilha,
-função recursiva e matriz**.
+histórico de operações. Todo o código está em `main.cpp` e usa **struct, vetor de
+tamanho fixo, ponteiro, fila, pilha, função recursiva e matriz**.
 
 ## Conceitos e onde estão no código
 
