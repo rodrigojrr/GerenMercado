@@ -40,6 +40,7 @@
   .reveal strong { color: #fff; }
   .reveal em { color: var(--warn); font-style: normal; }
   .reveal code { font-family: var(--mono); font-size: .88em; background: rgba(96,165,250,.14); color: #bcd7ff; padding: .1em .35em; border-radius: 5px; }
+  .reveal h1 code, .reveal h2 code, .reveal h3 code { font-size: .78em; }
   .reveal .muted { color: var(--muted); }
   .reveal .progress { color: var(--accent); height: 3px; }
   .reveal .slide-number { background: transparent; color: var(--muted); font-family: var(--mono); }
@@ -59,6 +60,7 @@
     color: var(--muted); background: rgba(255,255,255,.03); margin: 0 .35em .35em 0;
   }
 
+  /* ---------- terminal / saída do programa ---------- */
   .term {
     background: #060a16; border: 1px solid var(--line); border-radius: 12px;
     overflow: hidden; box-shadow: 0 18px 40px rgba(0,0,0,.45);
@@ -76,14 +78,79 @@
   .term .sys { color: #7b8cb3; }
   .term .ok { color: var(--accent); }
 
-  .reveal table { width: 100%; border-collapse: collapse; font-size: .6em; }
-  .reveal th, .reveal td { padding: .5em .6em; border-bottom: 1px solid var(--line); text-align: left; }
-  .reveal th { color: var(--muted); font-weight: 600; font-size: .9em; text-transform: uppercase; letter-spacing: .06em; }
-  .reveal tr:last-child td { border-bottom: none; }
+  /* ---------- trechos de código (highlight.js + reveal line numbers) ---------- */
+  .code {
+    background: #060a16; border: 1px solid var(--line); border-radius: 12px;
+    overflow: hidden; box-shadow: 0 18px 40px rgba(0,0,0,.45);
+  }
+  .code .bar {
+    display: flex; align-items: center; gap: 7px; padding: 8px 12px;
+    background: #0d1426; border-bottom: 1px solid var(--line);
+  }
+  .code .dot { width: 9px; height: 9px; border-radius: 50%; }
+  .code .dot.r { background: #ff5f57; } .code .dot.y { background: #febc2e; } .code .dot.g { background: #28c840; }
+  .code .bar span { margin-left: 8px; color: #5f7299; font-size: .8em; font-family: var(--mono); }
+
+  .code pre { position: relative; margin: 0; padding: 0; overflow: visible; }
+
+  /* cada etapa da animação é um clone posicionado sobre o original; o fundo
+     opaco garante que o clone cubra o texto de baixo (senão o escurecimento
+     das linhas não aparece) */
+  .reveal .code pre > code.fragment { background: #060a16; }
+
+  .reveal .code pre > code {
+    display: block; margin: 0; padding: 14px 16px 18px;
+    background: transparent; border-radius: 0;
+    font-family: var(--mono); font-size: .50em; line-height: 1.36;
+    color: #cfe0ff;
+  }
+  .code.compact { font-size: .9em; }
+  .code.compact pre > code { font-size: .45em; }
+  .code.big pre > code { font-size: .56em; }
+
+  /* a tabela de números de linha não deve herdar o estilo de tabela do conteúdo */
+  .code .hljs-ln { width: auto; border-collapse: collapse; font-size: 1em; }
+  .code .hljs-ln td { border: 0; }
+  .code .hljs-ln td.hljs-ln-code { padding: 0; }
+  .code .hljs-ln td.hljs-ln-numbers { padding: 0 1.1em 0 0; }
+  .code .hljs-ln-numbers { color: #4c5f85; }
+
+  /* cores dos tokens (highlight.js) */
+  .code .hljs-comment, .code .hljs-quote { color: #5c6f95; font-style: italic; }
+  .code .hljs-keyword, .code .hljs-selector-tag { color: #c792ea; }
+  .code .hljs-type, .code .hljs-built_in { color: #7dd3fc; }
+  .code .hljs-string, .code .hljs-meta-string { color: #a5e075; }
+  .code .hljs-number, .code .hljs-literal { color: #fbbf24; }
+  .code .hljs-title { color: #60a5fa; }
+  .code .hljs-params { color: #dbe6ff; }
+  .code .hljs-operator, .code .hljs-punctuation { color: #93a3c4; }
+  .code .hljs-variable, .code .hljs-attr { color: #e8eefc; }
+  .code .hljs-meta { color: #f87171; }
+
+  /* linhas fora do destaque: um pouco mais legíveis que o padrão (0.4) */
+  .reveal .code .hljs.has-highlights tr:not(.highlight-line) { opacity: .5; }
+
+  /* ---------- tabelas de conteúdo ---------- */
+  .reveal .doc-table { width: 100%; border-collapse: collapse; font-size: .6em; }
+  .reveal .doc-table th, .reveal .doc-table td { padding: .5em .6em; border-bottom: 1px solid var(--line); text-align: left; }
+  .reveal .doc-table th { color: var(--muted); font-weight: 600; font-size: .9em; text-transform: uppercase; letter-spacing: .06em; }
+  .reveal .doc-table tr:last-child td { border-bottom: none; }
   .reveal .num { font-family: var(--mono); color: var(--accent); white-space: nowrap; }
 
   .big-num { font-family: var(--mono); font-size: 1.6em; color: var(--accent); line-height: 1.1; }
   .caption { font-size: .5em; color: var(--muted); font-family: var(--mono); margin-top: .7em; }
+
+  /* pilha de chamadas da recursão */
+  .stack { font-family: var(--mono); font-size: .56em; line-height: 1.7; color: #cfe0ff; }
+  .stack .ret { color: var(--accent); }
+  .stack .note { color: var(--muted); }
+
+  /* ---------- modo captura (exportação para PDF) ----------
+     Mostra o estado final de cada slide: todos os fragments visíveis,
+     o código completo e sem escurecer as linhas não destacadas. */
+  .capture .reveal .fragment { opacity: 1 !important; visibility: inherit !important; transform: none !important; }
+  .capture .reveal pre > code.fragment { display: none !important; }
+  .capture .reveal .hljs.has-highlights tr:not(.highlight-line) { opacity: 1 !important; }
 </style>
 </head>
 <body>
@@ -142,51 +209,173 @@
 
 <!-- 3 -->
 <section>
-  <div class="eyebrow">Como está montado</div>
-  <h2>Tudo parte de uma <code>struct Mercado</code></h2>
-  <div class="term">
-    <div class="bar"><i class="dot r"></i><i class="dot y"></i><i class="dot g"></i><span>main.cpp</span></div>
-<pre><span class="sys">struct Mercado {</span>
-    Produto       produtos[MAX_PRODUTOS];   <span class="sys">// cadastro</span>
-    FilaClientes  caixas[MAX_CAIXAS];       <span class="sys">// 1 fila por caixa (ponteiros)</span>
-    PilhaOperacoes historico;               <span class="sys">// histórico (ponteiros)</span>
-    int           vendas[MAX_PRODUTOS][MAX_CAIXAS];  <span class="sys">// matriz</span>
-<span class="sys">};</span>
-
-<span class="sys">FilaClientes:</span>  inicio -> [#1] -> [#2] -> [#3] -> NULL   <span class="sys">(fim)</span>
-<span class="sys">Pilha:</span>         topo  -> [última operação] -> ... -> NULL</pre>
-  </div>
-  <p class="caption">Cada parte do trabalho tem seu espaço próprio: vetor para o cadastro, ponteiros para fila e pilha, matriz para o relatório.</p>
-  <aside class="notes">
-    A struct Mercado reúne as quatro partes: o vetor de produtos, as filas dos
-    caixas, a pilha de operações e a matriz de vendas. As setas mostram como os nós
-    se ligam por ponteiro.
-  </aside>
-</section>
-
-<!-- 4 -->
-<section>
   <div class="eyebrow">Os cinco conceitos</div>
   <h2>Onde cada um aparece no código</h2>
-  <table>
+  <table class="doc-table">
     <thead><tr><th>Conceito</th><th>Função</th><th>Para que serve</th></tr></thead>
     <tbody>
       <tr><td><strong>Ponteiro</strong></td><td><code>enfileirar</code>, <code>empilhar</code></td><td>nós ligados por <code>proximo</code></td></tr>
       <tr><td><strong>Fila</strong></td><td><code>enfileirar</code> / <code>desenfileirar</code></td><td>clientes de cada caixa, em ordem de chegada</td></tr>
       <tr><td><strong>Pilha</strong></td><td><code>empilhar</code> / <code>listarHistorico</code></td><td>histórico, do mais recente para o mais antigo</td></tr>
-      <tr><td><strong>Recursão</strong></td><td><code>buscarProduto</code>, <code>somarCarrinho</code></td><td>buscar produto e somar a compra</td></tr>
-      <tr><td></td><td><code>totalVendidoProduto</code>, <code>liberarFila</code></td><td>somar linha da matriz e liberar memória</td></tr>
+      <tr><td><strong>Recursão</strong></td><td><code>buscarProduto</code>, <code>somarCarrinho</code></td><td>buscar produto, somar a compra e os totais da matriz</td></tr>
       <tr><td><strong>Matriz</strong></td><td><code>vendas[produto][caixa]</code></td><td>quantidade vendida por produto em cada caixa</td></tr>
     </tbody>
   </table>
-  <p class="caption">A recursão também aparece em <code>somarCarrinho</code> (total da compra) e na liberação da pilha ao sair do programa.</p>
+  <p class="caption">As próximas cinco telas abrem o código de cada conceito, com o trecho real de <code>main.cpp</code>.</p>
   <aside class="notes">
     Cada conceito aparece em uma função concreta. A recursão é usada na busca do
     produto e nas somas: não é uma demonstração isolada.
   </aside>
 </section>
 
-<!-- BUILD -->
+<!-- 4 · código 1: struct -->
+<section>
+  <div class="eyebrow">Código · 1 de 5</div>
+  <h2>Uma <code>struct</code> guarda o sistema inteiro</h2>
+  <div class="code">
+    <div class="bar"><i class="dot r"></i><i class="dot y"></i><i class="dot g"></i><span>main.cpp</span></div>
+<pre><code data-trim class="language-cpp" data-line-numbers="1-6|2|3|4|5">struct Mercado {
+    Produto       produtos[MAX_PRODUTOS];            // vetor de tamanho fixo
+    FilaClientes  caixas[MAX_CAIXAS];                // uma fila por caixa (ponteiros)
+    PilhaOperacoes historico;                        // pilha de operacoes (ponteiros)
+    int           vendas[MAX_PRODUTOS][MAX_CAIXAS];  // matriz: produto x caixa
+};</code></pre>
+  </div>
+  <p class="caption">Cada parte do trabalho tem seu espaço próprio: vetor para o cadastro, ponteiros para fila e pilha, matriz para o relatório. Campos de controle (<code>totalProdutos</code>, <code>numCaixas</code>, <code>faturamento</code>) foram omitidos.</p>
+  <aside class="notes">
+    A struct Mercado reúne as quatro partes: o vetor de produtos, as filas dos
+    caixas, a pilha de operações e a matriz de vendas.
+    <br><br>
+    Avance para destacar um campo por vez: é a mesma declaração do main.cpp,
+    só com os comentários encurtados.
+  </aside>
+</section>
+
+<!-- 5 · código 2: fila -->
+<section>
+  <div class="eyebrow">Código · 2 de 5 · ponteiro + fila</div>
+  <h2>Fila: entra no fim, sai do início</h2>
+  <div class="code">
+    <div class="bar"><i class="dot r"></i><i class="dot y"></i><i class="dot g"></i><span>main.cpp · enfileirar</span></div>
+<pre><code data-trim class="language-cpp" data-line-numbers="1-14|2-4|6-8|9-11|13">void enfileirar(FilaClientes &fila, const Cliente &cliente) {
+    NoCliente *novo = new NoCliente;
+    novo->dado = cliente;
+    novo->proximo = NULL;
+
+    if (fila.fim == NULL) {  // fila vazia
+        fila.inicio = novo;
+        fila.fim = novo;
+    } else {
+        fila.fim->proximo = novo;
+        fila.fim = novo;
+    }
+    fila.tamanho++;
+}</code></pre>
+  </div>
+  <div class="grid-3" style="margin-top:14px">
+    <div class="card"><h3>O nó</h3><p style="font-size:.58em"><code>struct NoCliente</code><br><code>Cliente dado</code><br><code>NoCliente *proximo</code></p></div>
+    <div class="card"><h3>enfileirar</h3><p style="font-size:.58em">aloca o nó e encadeia no <code>fim</code>. Os dois ramos do <code>if</code> são alternativas: fila vazia ou fila com gente.</p></div>
+    <div class="card"><h3>desenfileirar</h3><p style="font-size:.58em">tira o <code>inicio</code>, avança <code>inicio = inicio-&gt;proximo</code> e dá <code>delete</code> — por isso é FIFO.</p></div>
+  </div>
+  <aside class="notes">
+    O ponteiro aparece duas vezes: cada nó aponta para o próximo e a fila
+    guarda dois ponteiros, inicio e fim.
+    <br><br>
+    Nos passos 3 e 4, mostre que só um dos ramos do if executa: com a fila vazia,
+    inicio e fim recebem o nó novo; com fila cheia, o nó entra depois do fim.
+  </aside>
+</section>
+
+<!-- 6 · código 3: pilha -->
+<section>
+  <div class="eyebrow">Código · 3 de 5 · ponteiro + pilha</div>
+  <h2>Pilha: o último a entrar é o primeiro a sair</h2>
+  <div class="code">
+    <div class="bar"><i class="dot r"></i><i class="dot y"></i><i class="dot g"></i><span>main.cpp · empilhar</span></div>
+<pre><code data-trim class="language-cpp" data-line-numbers="1-10|2-5|6-7|8|9-10">void empilhar(PilhaOperacoes &pilha, const string &descricao, double valor) {
+    NoOperacao *novo = new NoOperacao;
+    novo->descricao = descricao;
+    novo->valor = valor;
+    novo->horario = horarioAtual();
+    novo->proximo = pilha.topo;
+
+    pilha.topo = novo;
+    pilha.tamanho++;
+}</code></pre>
+  </div>
+  <p class="caption" style="margin-top:10px">A ordem muda em uma linha: <code>novo-&gt;proximo = pilha.topo</code> (o novo nó aponta para o antigo topo) e depois <code>pilha.topo = novo</code>. É o inverso da fila, que preserva o <code>inicio</code>.</p>
+  <div class="card" style="margin-top:12px">
+    <p style="font-size:.62em; margin:0"><strong>Leitura do histórico:</strong> como cada operação entra no topo, <code>listarHistorico</code> caminha de <code>topo</code> até <code>NULL</code> e mostra o mais recente primeiro.</p>
+  </div>
+  <aside class="notes">
+    Se a estrutura fosse uma fila, a ordem da listagem seria a inversa.
+    O histórico do slide 15 é exatamente essa pilha sendo percorrida.
+  </aside>
+</section>
+
+<!-- 7 · código 4: recursão -->
+<section>
+  <div class="eyebrow">Código · 4 de 5 · recursão</div>
+  <h2>A busca que chama a si mesma</h2>
+  <div class="code">
+    <div class="bar"><i class="dot r"></i><i class="dot y"></i><i class="dot g"></i><span>main.cpp · buscarProduto</span></div>
+<pre><code data-trim class="language-cpp" data-line-numbers="1-10|2|3-5|6-8|9">// Recursao: procura o produto do indice "i" ate o fim do vetor.
+int buscarProduto(const Produto produtos[], int i, int total, int codigo) {
+    if (i >= total) {          // caso base: acabaram os produtos
+        return -1;
+    }
+    if (produtos[i].codigo == codigo) {   // achou
+        return i;
+    }
+    return buscarProduto(produtos, i + 1, total, codigo);   // passo recursivo
+}</code></pre>
+  </div>
+  <div class="card" style="margin-top:12px; border-color:rgba(96,165,250,.45)">
+    <h3 style="margin-bottom:.3em">Pilha de chamadas · procurando o código 103</h3>
+    <div class="stack">
+      <div>buscarProduto(p, 0, 3, 103)  <span class="note">// 101 != 103, desce</span></div>
+      <div class="fragment">buscarProduto(p, 1, 3, 103)  <span class="note">// 102 != 103, desce</span></div>
+      <div class="fragment">buscarProduto(p, 2, 3, 103)  <span class="ret">// achou: retorna 2</span></div>
+      <div class="fragment"><span class="ret">retornos: 2 &lt;- 2 &lt;- 2</span>  <span class="note">// a pilha desempilha na volta</span></div>
+    </div>
+  </div>
+  <aside class="notes">
+    O caso base é o if do índice: quando i chega ao total, a função para e
+    devolve -1. Sem ele, a recursão nunca terminaria.
+    <br><br>
+    A mesma técnica aparece em somarCarrinho (total da compra),
+    totalVendidoProduto e totalVendidoCaixa (somas da matriz) e na liberação
+    da memória ao sair do programa.
+  </aside>
+</section>
+
+<!-- 8 · código 5: matriz -->
+<section>
+  <div class="eyebrow">Código · 5 de 5 · matriz</div>
+  <h2>Matriz: produto × caixa</h2>
+  <div class="code">
+    <div class="bar"><i class="dot r"></i><i class="dot y"></i><i class="dot g"></i><span>main.cpp · totalVendidoProduto</span></div>
+<pre><code data-trim class="language-cpp" data-line-numbers="1-9|2-3|4-6|7-9">// Recursao: soma uma linha da matriz de vendas (um produto em todos os caixas).
+int totalVendidoProduto(const int vendas[][MAX_CAIXAS], int linha, int coluna,
+                        int numCaixas) {
+    if (coluna >= numCaixas) {
+        return 0;
+    }
+    return vendas[linha][coluna] +
+           totalVendidoProduto(vendas, linha, coluna + 1, numCaixas);
+}</code></pre>
+  </div>
+  <div class="grid-2" style="margin-top:12px">
+    <div class="card"><h3>Uma linha por produto</h3><p style="font-size:.6em"><code>vendas[i][j]</code> guarda a quantidade do produto <code>i</code> vendida no caixa <code>j</code>. Somar a linha dá o total do produto; somar a coluna, o total do caixa.</p></div>
+    <div class="card"><h3>Duas recursões</h3><p style="font-size:.6em"><code>totalVendidoProduto</code> anda nas colunas; <code>totalVendidoCaixa</code> anda nas linhas. Ambas usam o mesmo caso base: o índice passou do fim.</p></div>
+  </div>
+  <aside class="notes">
+    A matriz é indexada por posição do produto no vetor, não pelo código.
+    Por isso a finalização do atendimento faz buscarProduto antes de somar.
+  </aside>
+</section>
+
+<!-- 9 -->
 <section>
   <div class="eyebrow">Compilação</div>
   <h2>Compilar e rodar</h2>
@@ -195,7 +384,7 @@
 <pre><span class="in">$</span> g++ -std=c++17 -Wall -Wextra -pedantic main.cpp -o mercado
 <span class="in">$</span> ./mercado</pre>
   </div>
-  <table style="margin-top:14px">
+  <table class="doc-table" style="margin-top:14px">
     <thead><tr><th>Flag</th><th>O que faz</th></tr></thead>
     <tbody>
       <tr><td><code>-std=c++17</code></td><td>escolhe a versão da linguagem; o código usa <code>to_string</code>, do C++11</td></tr>
@@ -212,7 +401,7 @@
   </aside>
 </section>
 
-<!-- 5 -->
+<!-- 10 -->
 <section>
   <div class="eyebrow">Caso de uso</div>
   <h2>Um dia no supermercado</h2>
@@ -229,7 +418,7 @@
   </aside>
 </section>
 
-<!-- 6 -->
+<!-- 11 -->
 <section>
   <div class="eyebrow">Demo · 1 de 5</div>
   <h2>Cadastro e listagem</h2>
@@ -256,7 +445,7 @@ Codigo: <span class="in">101</span>   Nome: <span class="in">Arroz Duplicado</sp
   </aside>
 </section>
 
-<!-- 7 -->
+<!-- 12 -->
 <section>
   <div class="eyebrow">Demo · 2 de 5</div>
   <h2>Compras entram na fila do caixa</h2>
@@ -285,7 +474,7 @@ Caixa 3 (1 cliente(s)):
   </aside>
 </section>
 
-<!-- 8 -->
+<!-- 13 -->
 <section>
   <div class="eyebrow">Demo · 3 de 5</div>
   <h2>Finalizar atendimento</h2>
@@ -310,7 +499,7 @@ Total..: R$ 85.80</span>
   </aside>
 </section>
 
-<!-- 9 -->
+<!-- 14 -->
 <section>
   <div class="eyebrow">Demo · 4 de 5</div>
   <h2>O estoque acabou enquanto Carla esperava</h2>
@@ -337,7 +526,7 @@ Caixa 3 (1 cliente(s)):
   </aside>
 </section>
 
-<!-- 10 -->
+<!-- 15 -->
 <section>
   <div class="eyebrow">Demo · 5 de 5 · pilha</div>
   <h2>Histórico: a pilha de operações</h2>
@@ -360,7 +549,7 @@ Caixa 3 (1 cliente(s)):
   </aside>
 </section>
 
-<!-- 11 -->
+<!-- 16 -->
 <section>
   <div class="eyebrow">Demo final · matriz</div>
   <h2>Relatório de vendas: produto × caixa</h2>
@@ -383,7 +572,7 @@ Faturamento total..: R$ 111.30</span></pre>
   </aside>
 </section>
 
-<!-- 12 -->
+<!-- 17 -->
 <section>
   <div class="eyebrow">Conclusão</div>
   <h1 style="font-size:1.5em">Poucas estruturas,<br>cada uma no seu papel</h1>
@@ -405,8 +594,15 @@ Faturamento total..: R$ 111.30</span></pre>
 </div>
 
 <script src="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/dist/reveal.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/plugin/highlight/highlight.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/plugin/notes/notes.js"></script>
 <script>
+  // ?capture é usado por exportar-pdf.sh: mostra todos os fragments de uma vez
+  // para que o PDF saia com o código completo, sem depender das animações.
+  if (new URLSearchParams(location.search).has('capture')) {
+    document.documentElement.classList.add('capture');
+  }
+
   Reveal.initialize({
     hash: true,
     slideNumber: 'c/t',
@@ -415,7 +611,7 @@ Faturamento total..: R$ 111.30</span></pre>
     width: 1280,
     height: 720,
     margin: 0.04,
-    plugins: [RevealNotes]
+    plugins: [RevealHighlight, RevealNotes]
   });
 </script>
 </body>

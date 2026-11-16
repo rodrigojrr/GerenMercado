@@ -64,5 +64,6 @@ algo está suspeito. O projeto compila com **zero avisos** nessas condições.
 
 ## Apresentação
 
-`apresentacao/slides.html` traz a demonstração do caso de uso com a saída real do
-programa; veja `apresentacao/README.md`.
+`apresentacao/slides.html` traz os trechos de código de cada conceito (com destaque
+linha a linha) e a demonstração do caso de uso com a saída real do programa; veja
+`apresentacao/README.md`.
